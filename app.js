@@ -22,7 +22,7 @@ app.post('/delete', async (req, res) => {
       if (result === 1) {
         res.redirect('/consulta');
       } else {
-        res.send(`Nome ${idToDelete} não localizado na base de dados.`);
+        res.send(`Nome ${idToDelete} não localizado na base de dados. Volte para a página anterior e tente novamente`);
       }
     } catch (error) {
       res.send(`Ocorreu um erro ao excluir o nome  ${idToDelete}.`);
