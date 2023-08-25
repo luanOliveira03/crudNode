@@ -14,6 +14,21 @@ app.get("/", function(req, res){
     res.render("primeira_pagina")
 })
 
+app.post('/delete', async (req, res) => {
+    const idToDelete = req.body.idToDelete;
+  
+    try {
+      const result = await post.destroy({ where: { nome: idToDelete } });
+      if (result === 1) {
+        res.redirect('/consulta');
+      } else {
+        res.send(`Nome ${idToDelete} não localizado na base de dados.`);
+      }
+    } catch (error) {
+      res.send(`Ocorreu um erro ao excluir o nome  ${idToDelete}.`);
+    }
+  });
+
 app.get("/consulta", function(req, res){
     post.findAll().then(function(post){
         res.render("consulta", {post})
@@ -30,7 +45,7 @@ app.post("/cadastrar", function(req, res){
         data_contato: req.body.data_contato,
         observacao: req.body.observacao
     }).then(function(){
-        res.redirect("/")
+        res.redirect("/consulta")
     }).catch(function(erro){
         res.send("Falha ao cadastrar os dados: " + erro)
     })
